@@ -24,6 +24,10 @@
     * 第四轮：tikz-cd 交换图（范畴论短图与同调代数长图，含五引理、蛇引理）。
 * **一键提交脚本 `commit.sh`**
     * 自动完成暂存、提交、推送三步，无改动时自动跳过。
+* **一键提交脚本 `commit.py`（Python 版）**
+    * 与 `commit.sh` 行为一致，Windows 下可直接 `python commit.py` 运行。
+* **补全同步脚本 `update_cwl.py`**
+    * 从 `structure.sty` 自动提取数学符号，生成 TeXStudio 的 `custom.cwl` 补全条目，无需手动维护。
 
 ### 优化与改进
 
@@ -31,7 +35,11 @@
 * cleveref 多标签引用连接词改为中文（同类型与不同类型两套 conjunction）。
 * 测试正文统一使用英文标点，双引号采用 LaTeX 标准写法。
 * 新增 `longtable` 宏包，支持跨页长表格。
-* 新增 `.gitattributes`，固定 shell 脚本使用 LF 换行。
+* 新增 `.gitattributes`，固定 shell 脚本与 Python 脚本使用 LF 换行。
+* PDF 书签（侧边栏）显示章节编号（`\pdfstringdefDisableCommands`）。
+* 英文字体定为 TeX Gyre Termes（Times 风格衬线）；数学字体保持原样。
+* 定理标题去掉编号后的句点（`separator sign`）。
+* `structure.sty` 模块化整理：划分为 页面/宏包/章节标题/定理环境/引用/符号库 六大模块并补充注释。
 * `README.md`：更新目录结构与模板特点，新增测试计划章节。
 
 ### 缺陷修复

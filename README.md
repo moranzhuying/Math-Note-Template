@@ -9,7 +9,9 @@
 ├── main.tex              # 主文件：定义 \part 并汇总各章节
 ├── structure.sty         # 核心样式：页面布局、定理环境、符号库、引用
 ├── quiver.sty            # 交换图支持（q.uiver.app 导出，封装 tikz-cd）
-├── commit.sh             # 一键提交脚本（可选）
+├── commit.py             # 一键提交脚本（Python，Windows 可直接运行）
+├── commit.sh             # 一键提交脚本（Bash 版，兼容）
+├── update_cwl.py         # 从 structure.sty 自动生成 TeXStudio 补全（可选）
 ├── Content/                  # 内容目录
 │   ├── Preface/              # 前言：全书结构、更新记录、记号说明
 │   ├── 01_Test_Chapter/      # 正文测试章节（三级嵌套示例）
@@ -75,3 +77,5 @@
 ## 使用
 
 用 XeLaTeX 编译 `main.tex` 即可。新增章节时，在 `Content/` 下按三级结构新建目录（Chapter → Section → 小节文件），每层建 `index.tex` 汇总，并在上一级 `\input` 引入。
+
+提交改动：`python commit.py "提交说明"`（自动完成暂存、提交、推送）。
