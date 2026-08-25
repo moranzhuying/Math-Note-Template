@@ -163,6 +163,7 @@
 \definecolor{maingreen}{RGB}{40, 125, 75}      % 绿：推论/例
 \definecolor{mainbrown}{RGB}{145, 90, 45}      % 茶：准则/约定
 \definecolor{mainyellow}{RGB}{195, 135, 0}     % 黄：提示/注意
+\definecolor{mainmagenta}{RGB}{190, 55, 95}    % 品红：习题
 \definecolor{maingray}{RGB}{80, 80, 80}        % 灰：证明/回答/注记/代码
 \definecolor{lightgray}{RGB}{245, 245, 245}    % 浅灰背景
 
@@ -170,6 +171,11 @@
 % 所有定理环境共用 mathcount 计数器，按 chapter 编号（如 1.1、1.2、...）。
 \newcounter{mathcount}[chapter]
 \renewcommand{\themathcount}{\thechapter.\arabic{mathcount}}
+
+% 习题环境使用独立计数器 exercisecount，同样按 chapter 编号（如 2.1、2.2、...），
+% 与定理环境（mathcount）互不干扰。
+\newcounter{exercisecount}[chapter]
+\renewcommand{\theexercisecount}{\thechapter.\arabic{exercisecount}}
 
 % -------- 4.4 基础样式 base_thmstyle --------
 % 所有 tcolorbox 环境的公共视觉样式：无框、可跨页、标题黑体无衬线等。
@@ -223,7 +229,13 @@ base_thmstyle, label type=example, colback=maingreen!6!white, accent north=maing
 \newtcbtheorem[use counter from=definition]{remark}{注记}{
 base_thmstyle, label type=remark, colback=maingray!6!white, accent north=maingray, coltitle=maingray }{}
 
-% -- 4.5.4 其他：算法、约定、警示（均与定理环境共用编号） --
+% -- 4.5.4 习题：独立编号（exercisecount），品红醒目配色 --
+% 习题集用环境，编号独立于定理环境（习题 2.1、2.2、...），
+% 品红配色使其在正文中一目了然。
+\newtcbtheorem[use counter=exercisecount, number within=chapter]{exercise}{习题}{
+base_thmstyle, label type=exercise, colback=mainmagenta!8!white, accent north=mainmagenta, coltitle=mainmagenta }{}
+
+% -- 4.5.5 其他：算法、约定、警示（均与定理环境共用编号） --
 \newtcbtheorem[use counter from=definition]{algorithm}{算法}{
 base_thmstyle, label type=algorithm, colback=mainorange!8!white, accent north=mainorange, coltitle=mainorange }{}
 \newtcbtheorem[use counter from=definition]{convention}{约定}{
@@ -323,6 +335,7 @@ base_thmstyle, label type=sketch, colback=mainpurple!5!white, accent north=mainp
 \providecommand{\metatheoremautorefname}{元定理}
 \providecommand{\criteriaautorefname}{准则}
 \providecommand{\problemautorefname}{问题}
+\providecommand{\exerciseautorefname}{习题}
 \providecommand{\exampleautorefname}{例}
 \providecommand{\remarkautorefname}{注记}
 \providecommand{\sketchautorefname}{分析}
@@ -339,6 +352,7 @@ base_thmstyle, label type=sketch, colback=mainpurple!5!white, accent north=mainp
 \crefname{theorem}{Theorem}{Theorems}
 \crefname{lemma}{Lemma}{Lemmas}
 \crefname{problem}{Problem}{Problems}
+\crefname{exercise}{Exercise}{Exercises}
 \crefname{algorithm}{Algorithm}{Algorithms}
 \crefname{convention}{Convention}{Conventions}
 \crefname{alarm}{Alarm}{Alarms}
@@ -356,6 +370,7 @@ base_thmstyle, label type=sketch, colback=mainpurple!5!white, accent north=mainp
 \crefname{metatheorem}{元定理}{元定理}
 \crefname{criteria}{准则}{准则}
 \crefname{problem}{问题}{问题}
+\crefname{exercise}{习题}{习题}
 \crefname{example}{例}{例}
 \crefname{remark}{注记}{注记}
 \crefname{sketch}{分析}{分析}
