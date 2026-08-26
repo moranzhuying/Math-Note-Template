@@ -264,11 +264,25 @@ base_thmstyle, label type=alarm, colback=mainyellow!16!white, accent north=mainr
 	colback=white!2!white
 }
 
-% -- 4.6.3 分析：带编号（与定理环境共用计数器） --
+% -- 4.6.3 解答：灰色细线，题后即答（习题专用） --
+% 用法：\begin{exercise}{...}{...} 题目 \end{exercise}
+%      紧接 \begin{solution} 解答内容 \end{solution}
+% 无编号、白底、细顶线，视觉轻于定理环境；before skip 较小使其紧贴题目。
+\newtcolorbox{solution}{
+	base_thmstyle,
+	title={解答},
+	coltitle=maingray,
+	accent north=maingray!30,
+	colback=white,
+	before skip=0.6em,
+	after skip=1.5em
+}
+
+% -- 4.6.4 分析：带编号（与定理环境共用计数器） --
 \newtcbtheorem[use counter from=definition]{sketch}{分析}{
 base_thmstyle, label type=sketch, colback=mainpurple!5!white, accent north=mainpurple!70, coltitle=mainpurple }{}
 
-% -- 4.6.4 提示：正文可自然换行、分段和跨页 --
+% -- 4.6.5 提示：正文可自然换行、分段和跨页 --
 \newtcolorbox{hint}[1][提示]{
 	base_thmstyle,
 	title={#1},
@@ -279,7 +293,7 @@ base_thmstyle, label type=sketch, colback=mainpurple!5!white, accent north=mainp
 	top=5pt
 }
 
-% -- 4.6.5 代码：可换行、可跨页的代码块；可选参数作为标题 --
+% -- 4.6.6 代码：可换行、可跨页的代码块；可选参数作为标题 --
 % 用法：\begin{code}[Python 示例] ... \end{code}
 \newtcblisting{code}[1][]{
 	enhanced, breakable, listing only,
