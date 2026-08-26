@@ -1,0 +1,27 @@
+\documentclass[10pt,a4paper,oneside,scheme=plain]{ctexbook}
+
+\usepackage{../structure}
+\usepackage{xr-hyper}
+
+% 跨文档引用笔记 main.aux: 笔记侧标签在习题集中统一带 note- 前缀
+% (配合 structure.sty 中 \noteref 的默认定义 \ref{note-...}).
+% 注意: 需先在项目根目录编译笔记 main.tex 生成 main.aux.
+\externaldocument[note-]{../main}
+
+\author{Yukina}
+\title{\Huge\textbf{习题集}}
+\date{\today}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+% 在 ExerciseBook/ 目录内编译: latexmk -xelatex main.tex
+\input{./Content/01_Test_Chapter/index}
+\input{./Content/02_Test_Chapter/index}
+
+\end{document}

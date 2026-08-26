@@ -80,3 +80,14 @@
 用 XeLaTeX 编译 `main.tex` 即可。新增章节时，在 `Content/` 下按三级结构新建目录（Chapter → Section → 小节文件），每层建 `index.tex` 汇总，并在上一级 `\input` 引入。
 
 提交改动：`python commit.py "提交说明"`（自动完成暂存、提交、推送）。
+
+### 习题编排模式（`setup_mode.py`）
+
+模板支持两种习题编排模式，用脚本一键切换：
+
+- **模式 1（默认）：独立习题集**。正文零习题，习题集作为另一本书放在 `ExerciseBook/`（与 `Content/` 同级，自带 `main.tex`，用 `xr-hyper` 跨文档引用笔记编号）。
+- **模式 2：讲义**。习题作为 Section 置于每章章末（最后一个 Section 之后、本章小结之前），目录 `Content/NN_Chapter/Exercise/`。
+
+用法：`python setup_mode.py 1` 或 `python setup_mode.py 2`（不带参数则交互选择）。脚本会创建/同步目标目录，使其镜像正文的 Chapter → Section 结构：缺失的小节文件自动补建并 `\input` 进 `index.tex`，原 `index.tex` 备份为 `.bak`；同时自动管理 `main.tex` 中 `\noteref` 宏的覆盖行。
+
+习题中引用笔记定理/定义一律写 `\noteref{标签}`：模式 1 下跨文档引用（`\ref{note-标签}`），模式 2 下本地引用（`\ref{标签}`），习题文件两种模式完全可移植。模式 1 编译习题集：先编译笔记 `main.tex` 生成 `.aux`，再进入 `ExerciseBook/` 执行 `latexmk -xelatex main.tex`。
