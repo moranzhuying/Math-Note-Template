@@ -418,6 +418,16 @@ base_thmstyle, label type=sketch, colback=mainpurple!5!white, accent north=mainp
     \renewcommand{\creflastgroupconjunction}{和}
 }
 
+% -------- 5.5 习题引用笔记宏 \noteref --------
+% 习题文件中对笔记定理/定义/命题等的引用一律写 \noteref{标签}，两种模式通用：
+%   模式 1（独立习题集 ExerciseBook/）：默认行为，跨文档引用笔记标签，
+%       配合 \externaldocument[note-]{main} 使用（见习题集 main.tex），
+%       展开为 \ref{note-标签}。
+%   模式 2（讲义，习题内嵌正文）：在 main.tex 中用
+%       \renewcommand{\noteref}[1]{\ref{#1}} 覆盖为本地引用。
+% 这样习题文件内容完全可移植：两种模式间转换只需搬目录，引用零修改。
+\providecommand{\noteref}[1]{\ref{note-#1}}
+
 
 % ================================================================
 % [模块 VI] 数学符号定义库

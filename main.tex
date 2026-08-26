@@ -3,6 +3,11 @@
 \usepackage{./structure}
 \usepackage{quiver}
 
+% 讲义模式（模式 2）：习题内嵌正文，\noteref 直接引用本文档内的标签。
+% 若切换到独立习题集（模式 1，ExerciseBook/），此行不写即可（structure.sty 默认
+% 跨文档引用 note- 前缀，配合习题集 main.tex 中的 \externaldocument[note-]{main}）。
+\renewcommand{\noteref}[1]{\ref{#1}}
+
 \author{Yukina}
 \title{\Huge\textbf{一个简单的\TeX 书籍模板}}
 \date{\today}
