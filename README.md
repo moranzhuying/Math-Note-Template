@@ -12,6 +12,7 @@
 ├── commit.py             # 一键提交脚本（Python，Windows 可直接运行）
 ├── commit.sh             # 一键提交脚本（Bash 版，兼容）
 ├── update_cwl.py         # 从 structure.sty 自动生成 TeXStudio 补全（可选）
+├── setup_mode.py         # 习题编排模式切换脚本（模式 1/2）
 ├── Content/                  # 内容目录
 │   ├── Preface/              # 前言：全书结构、更新记录、记号说明
 │   ├── 01_Test_Chapter/      # 正文测试章节（三级嵌套示例）
@@ -21,6 +22,7 @@
 │   │   └── Appendix_Test_A/  #   章内附录
 │   ├── 02_Test_Chapter/      # 正文测试章节
 │   └── Appendix/             # 后记：术语对照表、参考文献
+├── ExerciseBook/             # 习题集（模式 1 时使用，脚本生成）
 └── Figures/                  # 插图目录
 ```
 
@@ -77,17 +79,53 @@
 
 ## 使用
 
-用 XeLaTeX 编译 `main.tex` 即可。新增章节时，在 `Content/` 下按三级结构新建目录（Chapter → Section → 小节文件），每层建 `index.tex` 汇总，并在上一级 `\input` 引入。
+### 编译
 
-提交改动：`python commit.py "提交说明"`（自动完成暂存、提交、推送）。
+用 XeLaTeX 编译 `main.tex` 即可：
 
-### 习题编排模式（`setup_mode.py`）
+```bash
+latexmk -xelatex main.tex
+```
+
+新增章节时，在 `Content/` 下按三级结构新建目录（Chapter → Section → 小节文件），每层建 `index.tex` 汇总，并在上一级 `\input` 引入。
+
+### 脚本工具
+
+#### `commit.py` / `commit.sh` — 一键提交
+
+自动完成「检查改动 → 暂存 → 提交 → 推送到 GitHub」四步，无改动时自动跳过。
+
+```bash
+python commit.py "提交说明"    # Python 版（推荐，Windows 直接可用）
+bash commit.sh "提交说明"      # Bash 版（兼容）
+```
+
+不写提交说明则默认「更新笔记」。推送走 SSH（GitHub 443 端口已配置）。
+
+#### `setup_mode.py` — 习题编排模式切换
 
 模板支持两种习题编排模式，用脚本一键切换：
 
 - **模式 1（默认）：独立习题集**。正文零习题，习题集作为另一本书放在 `ExerciseBook/`（与 `Content/` 同级，自带 `main.tex`，用 `xr-hyper` 跨文档引用笔记编号）。
 - **模式 2：讲义**。习题作为 Section 置于每章章末（最后一个 Section 之后、本章小结之前），目录 `Content/NN_Chapter/Exercise/`。
 
-用法：`python setup_mode.py 1` 或 `python setup_mode.py 2`（不带参数则交互选择）。脚本会创建/同步目标目录，使其镜像正文的 Chapter → Section 结构：缺失的小节文件自动补建并 `\input` 进 `index.tex`，原 `index.tex` 备份为 `.bak`；同时自动管理 `main.tex` 中 `\noteref` 宏的覆盖行。
+```bash
+python setup_mode.py 1     # 切换到模式 1（独立习题集）
+python setup_mode.py 2     # 切换到模式 2（讲义）
+python setup_mode.py       # 不带参数则交互选择
+```
 
-习题中引用笔记定理/定义一律写 `\noteref{标签}`：模式 1 下跨文档引用（`\ref{note-标签}`），模式 2 下本地引用（`\ref{标签}`），习题文件两种模式完全可移植。模式 1 编译习题集：先编译笔记 `main.tex` 生成 `.aux`，再进入 `ExerciseBook/` 执行 `latexmk -xelatex main.tex`。
+脚本会创建/同步目标目录，使其镜像正文的 Chapter → Section 结构：缺失的小节文件自动补建并 `\input` 进 `index.tex`，原 `index.tex` 备份为 `.bak`；同时自动管理 `main.tex` 中 `\noteref` 宏的覆盖行。
+
+习题中引用笔记定理/定义一律写 `\noteref{标签}`：模式 1 下跨文档引用（`\ref{note-标签}`），模式 2 下本地引用（`\ref{标签}`），习题文件两种模式完全可移植。
+
+模式 1 编译习题集：先编译笔记 `main.tex` 生成 `.aux`，再进入 `ExerciseBook/` 目录执行 `latexmk -xelatex main.tex`。
+
+#### `update_cwl.py` — TeXStudio 补全同步（可选）
+
+从 `structure.sty` 的数学符号库（[模块 VI]）自动提取 `\newcommand` / `\renewcommand`，生成 TeXStudio 的 `custom.cwl` 补全条目。修改符号库后运行一次即可，TeXStudio 重启后生效。
+
+```bash
+python update_cwl.py                      # 写入默认路径
+python update_cwl.py "自定义路径.cwl"     # 指定输出路径
+```
