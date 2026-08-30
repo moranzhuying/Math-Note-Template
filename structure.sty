@@ -575,3 +575,22 @@ base_thmstyle, label type=sketch, colback=mainpurple!5!white, accent north=mainp
 \newcommand{\supp}{\operatorname{supp}}    % 支集
 \newcommand{\disc}{\operatorname{disc}}    % 判别式/离散
 \newcommand{\tw}{\operatorname{tw}}        % 扭结 (Twist)
+
+
+% ================================================================
+% [模块 VII] 双栏目录
+% ================================================================
+% 目录以双栏排版（标题通栏，内容分两栏），减少目录占用页数。
+% 重定义 \tableofcontents，正文中照常使用即可，无需改动 main.tex。
+\usepackage{multicol}
+\let\oldtableofcontents\tableofcontents
+\renewcommand{\tableofcontents}{%
+  \begingroup
+  \chapter*{\contentsname}%
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\contentsname}%
+  \begin{multicols}{2}%
+  \@starttoc{toc}%
+  \end{multicols}%
+  \endgroup
+}
