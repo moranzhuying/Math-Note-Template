@@ -62,6 +62,10 @@
 
 正文采用 Chapter → Section → 小节三级嵌套结构，每层目录有 `index.tex` 汇总、逐级 `\input`。每章附带 `intro.tex`（本章导引）、`Summary/`（本章小结），每节可带 `Summary/`（本节小结）与章内附录 `Appendix_Name/`，将长文档拆分为小文件，便于维护与复用。
 
+### 7. 双栏目录
+
+基于 `multicol` 重定义 `\tableofcontents`：标题通栏、目录内容双栏排版，减少目录占用页数；PDF 书签正常保留。正文无需额外改动，照常写 `\tableofcontents` 即可。
+
 ## 测试计划
 
 模板内置两章测试内容（`Content/01_Test_Chapter`、`02_Test_Chapter`），按复杂度从低到高分四轮验证：

@@ -1,7 +1,27 @@
 # 更新日志 (ChangeLog)
 
-**版本日期**: 2026-08-26
+**版本日期**: 2026-08-30
 **当前状态**: 模板初始版本，持续完善中
+
+---
+
+## 2026-08-30 更新概览
+
+本日完成三项样式优化：新增双栏目录与三线表支持，并将英文字体换回默认 Latin Modern，提升长文档目录可读性与表格排版能力。
+
+### 新增功能
+
+* **双栏目录（模块 VII）**
+    * 基于 `multicol` 重定义 `\tableofcontents`：标题通栏、目录内容分两栏排版，减少目录占用页数。
+    * `\phantomsection` + `\addcontentsline` 保证「目录」条目仍出现在 PDF 侧栏书签中。
+    * 正文无需改动 `main.tex`，照常使用 `\tableofcontents` 即可。
+* **三线表支持**
+    * 加载 `booktabs` 宏包，支持 `\toprule` / `\midrule` / `\bottomrule` 三线表排版。
+
+### 优化与改进
+
+* 英文主字体由 TeX Gyre Termes 换回默认 Latin Modern（Computer Modern 系）。
+    * Times 风格衬线等号会使 `\implies` 等长双线箭头左端出现细黑线，换回默认字体后渲染为标准几何风格。
 
 ---
 
