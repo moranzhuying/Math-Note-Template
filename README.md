@@ -56,7 +56,7 @@
 
 ### 5. 预置数学符号库
 
-内置代数 / 几何 / 分析三大类常用记号，如 `\N \Z \Q \R \C`、`\Hom \End \Aut`、`\coker \coim \tor`、`\GL \SL \SO`、`\closure \interior` 等，面向抽象代数、范畴论与线性代数写作。
+内置代数 / 几何 / 分析三大类常用记号，如 `\N \Z \Q \R \C`、`\Hom \End \Aut`、`\coker \coim \tor`、`\GL \SL \SO`、`\closure \interior` 等，面向抽象代数、范畴论与线性代数写作。另含由旧笔记项目合并而来的扩展记号：`\Comp`（连通分支）、`\Seqs`、`\V`、`\rg`、`\vect`、`\alt`、`\sym`、`\BiBal`、`\Mul`、`\MultBal`、`\algmult`、`\geomult`。
 
 ### 6. 内容分层管理
 
@@ -90,6 +90,8 @@
 ```bash
 latexmk -xelatex main.tex
 ```
+
+注意 `\usepackage{./structure}`（`main.tex`）与 `\ProvidesPackage{./structure}`（`structure.sty`）是配套写法，`./` 须同期存在或同期省略，不要只改其中一处：只改一边会触发 `requested package` 编译警告；去掉 `./` 则部分编辑器（如 TeXStudio）会误报「包未找到」。
 
 新增章节时，在 `Content/` 下按三级结构新建目录（Chapter → Section → 小节文件），每层建 `index.tex` 汇总，并在上一级 `\input` 引入。
 
@@ -127,9 +129,13 @@ python setup_mode.py       # 不带参数则交互选择
 
 #### `update_cwl.py` — TeXStudio 补全同步（可选）
 
-从 `structure.sty` 的数学符号库（[模块 VI]）自动提取 `\newcommand` / `\renewcommand`，生成 TeXStudio 的 `custom.cwl` 补全条目。修改符号库后运行一次即可，TeXStudio 重启后生效。
+从 `structure.sty` 的数学符号库（[模块 VI]）自动提取 `\newcommand` / `\renewcommand`，生成 TeXStudio 的 `custom.cwl` 补全条目。修改符号库后运行一次即可，TeXStudio 重启后生效。脚本固定读取模板自身的 `structure.sty`，故在模板或任一笔记项目中运行，结果均一致。
 
 ```bash
 python update_cwl.py                      # 写入默认路径
 python update_cwl.py "自定义路径.cwl"     # 指定输出路径
 ```
+
+`custom.cwl` 分三段：头部 `#include` 区、手动登记区、自动生成区；脚本只重写自动生成区，前两段原样保留。
+
+若某条命令输入后没有补全，通常是因为它由 `structure.sty` **内部加载**的宏包提供（TeXStudio 只为 `main.tex` 中直接 `\usepackage` 的宏包加载补全），解决办法是在 `custom.cwl` 的 `#include` 区加一行 `#include:宏包名`，或在手动登记区加一行 `\命令名#m 说明`（例如 `\bm`、`\mathfrak` 即如此补充）。
