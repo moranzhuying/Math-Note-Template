@@ -25,3 +25,7 @@ Thumbs.db
 
 # === WorkBuddy 项目数据（本地专属，不入库） ===
 .workbuddy/
+
+# === Python 缓存与本地配置 ===
+__pycache__/
+manager.conf
