@@ -1,4 +1,4 @@
-# Math-Note-Template-By-Yukina
+# Math-Note-Template
 
 一个面向数学笔记与书籍写作的 LaTeX 模板，基于 `ctexbook` 构建，内置统一的定理环境体系、数学符号库与交换图支持。
 
